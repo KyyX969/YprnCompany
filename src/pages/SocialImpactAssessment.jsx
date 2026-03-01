@@ -90,9 +90,8 @@ const ImageSlider = ({ images }) => {
             src={img.src}
             alt={img.alt}
             loading="lazy"
-            className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${
-              index === current ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
-            }`}
+            className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${index === current ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+              }`}
           />
         ))}
       </div>
@@ -115,11 +114,10 @@ const ImageSlider = ({ images }) => {
           <button
             key={index}
             onClick={() => setCurrent(index)}
-            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-              index === current
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${index === current
                 ? 'bg-primary w-7 shadow-glow-primary'
                 : 'bg-white/50 hover:bg-white/80'
-            }`}
+              }`}
           />
         ))}
       </div>
@@ -394,7 +392,10 @@ const SocialImpactAssessment = () => {
                       </div>
                     )}
                     <h3 className="text-lg font-bold text-text-heading mb-2">{project.judul}</h3>
-                    <p className="text-text-body text-sm">{project.deskripsi}</p>
+                    <div
+                      className="text-text-body text-sm"
+                      dangerouslySetInnerHTML={{ __html: project.deskripsi }}
+                    />
                     <p className="text-primary text-xs mt-3 font-medium">
                       {t('siaPage.clickDetail')}
                     </p>
@@ -516,11 +517,10 @@ const SocialImpactAssessment = () => {
                     <button
                       key={page}
                       onClick={() => goToPage(page)}
-                      className={`w-10 h-10 rounded-lg text-sm font-semibold transition-all ${
-                        currentPage === page
+                      className={`w-10 h-10 rounded-lg text-sm font-semibold transition-all ${currentPage === page
                           ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/25'
                           : 'border border-dark-200/50 text-text-body hover:text-primary hover:border-primary/50'
-                      }`}
+                        }`}
                     >
                       {page}
                     </button>
@@ -605,7 +605,10 @@ const SocialImpactAssessment = () => {
                   )}
                 </div>
                 {selectedItem.deskripsi && (
-                  <p className="text-text-body leading-relaxed">{selectedItem.deskripsi}</p>
+                  <div
+                    className="text-text-body leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: selectedItem.deskripsi }}
+                  />
                 )}
               </div>
             </motion.div>
@@ -666,7 +669,10 @@ const SocialImpactAssessment = () => {
                   </div>
                 )}
                 {selectedProject.deskripsi && (
-                  <p className="text-text-body leading-relaxed">{selectedProject.deskripsi}</p>
+                  <div
+                    className="text-text-body leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: selectedProject.deskripsi }}
+                  />
                 )}
                 {selectedProject.detail && (
                   <div className="bg-dark/30 rounded-xl p-4">

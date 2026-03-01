@@ -749,7 +749,10 @@ const AdminDashboard = () => {
                       {item.judul || 'Tanpa judul'}
                     </h3>
                     {item.deskripsi && (
-                      <p className="text-text-body text-sm mb-3 line-clamp-2">{item.deskripsi}</p>
+                      <div
+                        className="text-text-body text-sm mb-3 line-clamp-2"
+                        dangerouslySetInnerHTML={{ __html: item.deskripsi }}
+                      />
                     )}
                     <div className="flex space-x-2">
                       <button
@@ -850,7 +853,10 @@ const AdminDashboard = () => {
                       {item.judul || 'Tanpa judul'}
                     </h3>
                     {item.deskripsi && (
-                      <p className="text-text-body text-sm mb-3 line-clamp-2">{item.deskripsi}</p>
+                      <div
+                        className="text-text-body text-sm mb-3 line-clamp-2"
+                        dangerouslySetInnerHTML={{ __html: item.deskripsi }}
+                      />
                     )}
                     <div className="flex space-x-2">
                       {!item.is_active && (
@@ -952,7 +958,10 @@ const AdminDashboard = () => {
                       {item.judul}
                     </h3>
                     {item.deskripsi && (
-                      <p className="text-text-body text-sm mb-3 line-clamp-2">{item.deskripsi}</p>
+                      <div
+                        className="text-text-body text-sm mb-3 line-clamp-2"
+                        dangerouslySetInnerHTML={{ __html: item.deskripsi }}
+                      />
                     )}
                     <div className="flex flex-wrap gap-3 text-xs text-text-muted mb-4">
                       {item.tanggal && (
@@ -1114,7 +1123,10 @@ const AdminDashboard = () => {
                         {item.judul}
                       </h3>
                       {item.deskripsi && (
-                        <p className="text-text-body text-sm mb-3 line-clamp-2">{item.deskripsi}</p>
+                        <div
+                          className="text-text-body text-sm mb-3 line-clamp-2"
+                          dangerouslySetInnerHTML={{ __html: item.deskripsi }}
+                        />
                       )}
                       {Array.isArray(item.tags) && item.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 mb-3">
@@ -1581,15 +1593,20 @@ const AdminDashboard = () => {
                     <label className="block text-sm font-medium text-text-heading mb-2">
                       Deskripsi Singkat
                     </label>
-                    <textarea
-                      value={proyekFormData.deskripsi}
-                      onChange={(e) =>
-                        setProyekFormData({ ...proyekFormData, deskripsi: e.target.value })
-                      }
-                      rows={2}
-                      className="w-full px-4 py-3 bg-dark/50 border border-dark-200/50 rounded-xl text-text-heading placeholder-text-muted focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all resize-none"
-                      placeholder="Deskripsi singkat yang tampil di card..."
-                    />
+                    <div className="custom-ckeditor">
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={proyekFormData.deskripsi || ''}
+                        onChange={(event, editor) => {
+                          const data = editor.getData();
+                          setProyekFormData({ ...proyekFormData, deskripsi: data });
+                        }}
+                        config={{
+                          toolbar: ['bold', 'italic', 'link', 'undo', 'redo'],
+                          placeholder: 'Deskripsi singkat yang tampil di card...'
+                        }}
+                      />
+                    </div>
                   </div>
 
                   {/* Detail Lengkap */}
@@ -1730,7 +1747,10 @@ const AdminDashboard = () => {
                 )}
 
                 {detailProyek.deskripsi && (
-                  <p className="text-text-body leading-relaxed mb-4">{detailProyek.deskripsi}</p>
+                  <div
+                    className="text-text-body leading-relaxed mb-4"
+                    dangerouslySetInnerHTML={{ __html: detailProyek.deskripsi }}
+                  />
                 )}
 
                 {detailProyek.detail ? (
@@ -1894,13 +1914,20 @@ const AdminDashboard = () => {
                     <label className="block text-sm font-medium text-text-heading mb-2">
                       Deskripsi (opsional)
                     </label>
-                    <textarea
-                      value={heroFormData.deskripsi}
-                      onChange={(e) => setHeroFormData({ ...heroFormData, deskripsi: e.target.value })}
-                      rows={4}
-                      className="w-full px-4 py-3 bg-dark/50 border border-dark-200/50 rounded-xl text-text-heading placeholder-text-muted focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all resize-none"
-                      placeholder="Keterangan gambar..."
-                    />
+                    <div className="custom-ckeditor">
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={heroFormData.deskripsi || ''}
+                        onChange={(event, editor) => {
+                          const data = editor.getData();
+                          setHeroFormData({ ...heroFormData, deskripsi: data });
+                        }}
+                        config={{
+                          toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo'],
+                          placeholder: 'Keterangan gambar...'
+                        }}
+                      />
+                    </div>
                   </div>
 
                   {/* Urutan */}
@@ -2070,13 +2097,20 @@ const AdminDashboard = () => {
                     <label className="block text-sm font-medium text-text-heading mb-2">
                       Deskripsi (opsional)
                     </label>
-                    <textarea
-                      value={videoFormData.deskripsi}
-                      onChange={(e) => setVideoFormData({ ...videoFormData, deskripsi: e.target.value })}
-                      rows={5}
-                      className="w-full px-4 py-3 bg-dark/50 border border-dark-200/50 rounded-xl text-text-heading placeholder-text-muted focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all resize-none"
-                      placeholder="Keterangan video..."
-                    />
+                    <div className="custom-ckeditor">
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={videoFormData.deskripsi || ''}
+                        onChange={(event, editor) => {
+                          const data = editor.getData();
+                          setVideoFormData({ ...videoFormData, deskripsi: data });
+                        }}
+                        config={{
+                          toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo'],
+                          placeholder: 'Keterangan video...'
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               </form>

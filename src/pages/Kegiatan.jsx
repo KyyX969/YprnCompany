@@ -199,11 +199,10 @@ const Kegiatan = () => {
                       <button
                         key={page}
                         onClick={() => goToPage(page)}
-                        className={`w-10 h-10 rounded-lg text-sm font-semibold transition-all ${
-                          currentPage === page
-                            ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/25'
-                            : 'border border-dark-200/50 text-text-body hover:text-primary hover:border-primary/50'
-                        }`}
+                        className={`w-10 h-10 rounded-lg text-sm font-semibold transition-all ${currentPage === page
+                          ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/25'
+                          : 'border border-dark-200/50 text-text-body hover:text-primary hover:border-primary/50'
+                          }`}
                       >
                         {page}
                       </button>
@@ -330,9 +329,9 @@ const Kegiatan = () => {
                 </div>
 
                 {selectedItem.deskripsi ? (
-                  <p className="text-text-body leading-relaxed whitespace-pre-line">
-                    {selectedItem.deskripsi}
-                  </p>
+                  <div className="text-text-body leading-relaxed whitespace-pre-line">
+                    <div dangerouslySetInnerHTML={{ __html: selectedItem.deskripsi }} />
+                  </div>
                 ) : (
                   <p className="text-text-muted italic">{t('kegiatanPage.noDetailInfo')}</p>
                 )}
