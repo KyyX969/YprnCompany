@@ -22,8 +22,70 @@ import {
   CheckCircle,
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { CKEditor } from '@ckeditor/ckeditor5-react'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
 import { API_URL, getImageUrl } from '../config/api'
+
+// Define custom styling for CKEditor and hide scrollbar
+const customStyles = `
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  /* CKEditor Custom Dark Theme Styles */
+  :root {
+    --ck-color-base-background: rgba(255, 255, 255, 0.05);
+    --ck-color-base-border: rgba(255, 255, 255, 0.1);
+    --ck-color-base-text: #f3f4f6;
+    --ck-color-toolbar-background: rgba(255, 255, 255, 0.05);
+    --ck-color-toolbar-border: rgba(255, 255, 255, 0.1);
+    --ck-color-button-default-hover-background: rgba(255, 255, 255, 0.1);
+    --ck-color-button-default-active-background: rgba(255, 255, 255, 0.15);
+    --ck-color-button-on-background: rgba(255, 255, 255, 0.2);
+    --ck-color-button-on-color: #ffffff;
+    --ck-color-dropdown-panel-background: #1f2937;
+    --ck-color-dropdown-panel-border: rgba(255, 255, 255, 0.1);
+    --ck-color-list-background: #1f2937;
+    --ck-color-list-button-hover-background: rgba(255, 255, 255, 0.1);
+    --ck-color-input-background: rgba(0, 0, 0, 0.5);
+    --ck-color-input-border: rgba(255, 255, 255, 0.1);
+    --ck-border-radius: 0.75rem;
+  }
+  
+  .ck.ck-editor__main > .ck-editor__editable {
+    min-height: 150px;
+    max-height: 300px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    border-bottom-left-radius: 0.75rem !important;
+    border-bottom-right-radius: 0.75rem !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #f3f4f6 !important;
+  }
+  
+  .ck.ck-toolbar {
+    border-top-left-radius: 0.75rem !important;
+    border-top-right-radius: 0.75rem !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+  }
+  
+  .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: none !important;
+  }
+  
+  /* Reset link color inside editor */
+  .ck-content a {
+    color: #3b82f6 !important;
+  }
+`
 
 const AdminDashboard = () => {
   const { admin, token, logout } = useAuth()
@@ -1160,7 +1222,7 @@ const AdminDashboard = () => {
             </div>
 
             {/* Content Body */}
-            <div className="flex-1 overflow-y-auto p-6">
+            <div className="flex-1 overflow-y-auto hide-scrollbar p-6">
               <form id="kegiatanForm" onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-6">
                 {/* Left Column: Image Upload */}
                 <div className="w-full md:w-1/3">
@@ -1220,13 +1282,21 @@ const AdminDashboard = () => {
                     <label className="block text-sm font-medium text-text-heading mb-2">
                       Deskripsi
                     </label>
-                    <textarea
-                      value={formData.deskripsi}
-                      onChange={(e) => setFormData({ ...formData, deskripsi: e.target.value })}
-                      rows={4}
-                      className="w-full px-4 py-3 bg-dark/50 border border-dark-200/50 rounded-xl text-text-heading placeholder-text-muted focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all resize-none"
-                      placeholder="Deskripsi kegiatan..."
-                    />
+                    <style>{customStyles}</style>
+                    <div className="custom-ckeditor">
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={formData.deskripsi || ''}
+                        onChange={(event, editor) => {
+                          const data = editor.getData();
+                          setFormData({ ...formData, deskripsi: data });
+                        }}
+                        config={{
+                          toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo'],
+                          placeholder: 'Deskripsi kegiatan...'
+                        }}
+                      />
+                    </div>
                   </div>
 
                   {/* Tanggal & Lokasi */}
@@ -1365,7 +1435,7 @@ const AdminDashboard = () => {
 
             {/* Right side: Content */}
             <div className="flex-1 flex flex-col h-full overflow-hidden">
-              <div className="p-6 md:p-8 flex-1 overflow-y-auto">
+              <div className="p-6 md:p-8 flex-1 overflow-y-auto hide-scrollbar">
                 {/* Kategori badge */}
                 <span className="inline-block px-3 py-1 bg-primary/20 text-primary text-xs font-medium rounded-full mb-3">
                   {kategoriLabel[detailItem.kategori] || detailItem.kategori}
@@ -1389,9 +1459,10 @@ const AdminDashboard = () => {
                 </div>
 
                 {detailItem.deskripsi ? (
-                  <p className="text-text-body leading-relaxed whitespace-pre-line">
-                    {detailItem.deskripsi}
-                  </p>
+                  <div
+                    className="text-text-body leading-relaxed prose prose-invert max-w-none"
+                    dangerouslySetInnerHTML={{ __html: detailItem.deskripsi }}
+                  />
                 ) : (
                   <p className="text-text-muted italic">Belum ada deskripsi.</p>
                 )}
@@ -1446,7 +1517,7 @@ const AdminDashboard = () => {
             </div>
 
             {/* Content Body */}
-            <div className="flex-1 overflow-y-auto p-6">
+            <div className="flex-1 overflow-y-auto hide-scrollbar p-6">
               <form id="proyekForm" onSubmit={handleProyekSubmit} className="flex flex-col md:flex-row gap-6">
                 {/* Left Column: Image Upload */}
                 <div className="w-full md:w-1/3">
@@ -1526,13 +1597,21 @@ const AdminDashboard = () => {
                     <label className="block text-sm font-medium text-text-heading mb-2">
                       Detail Lengkap
                     </label>
-                    <textarea
-                      value={proyekFormData.detail}
-                      onChange={(e) => setProyekFormData({ ...proyekFormData, detail: e.target.value })}
-                      rows={4}
-                      className="w-full px-4 py-3 bg-dark/50 border border-dark-200/50 rounded-xl text-text-heading placeholder-text-muted focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all resize-none"
-                      placeholder="Penjelasan detail proyek yang akan tampil saat user mengklik..."
-                    />
+                    <style>{customStyles}</style>
+                    <div className="custom-ckeditor">
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={proyekFormData.detail || ''}
+                        onChange={(event, editor) => {
+                          const data = editor.getData();
+                          setProyekFormData({ ...proyekFormData, detail: data });
+                        }}
+                        config={{
+                          toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo'],
+                          placeholder: 'Penjelasan detail proyek yang akan tampil saat user mengklik...'
+                        }}
+                      />
+                    </div>
                   </div>
 
                   {/* Tags & Kategori */}
@@ -1630,7 +1709,7 @@ const AdminDashboard = () => {
 
             {/* Right side: Content */}
             <div className="flex-1 flex flex-col h-full overflow-hidden">
-              <div className="p-6 md:p-8 flex-1 overflow-y-auto">
+              <div className="p-6 md:p-8 flex-1 overflow-y-auto hide-scrollbar">
                 <span className="inline-block px-3 py-1 bg-secondary/20 text-secondary text-xs font-medium rounded-full mb-3">
                   {proyekKategoriLabel[detailProyek.kategori] || detailProyek.kategori}
                 </span>
@@ -1657,9 +1736,10 @@ const AdminDashboard = () => {
                 {detailProyek.detail ? (
                   <div className="bg-dark/30 rounded-xl p-4 mb-6">
                     <h4 className="text-sm font-semibold text-text-heading mb-2">Detail Proyek</h4>
-                    <p className="text-text-body leading-relaxed whitespace-pre-line">
-                      {detailProyek.detail}
-                    </p>
+                    <div
+                      className="text-text-body leading-relaxed prose prose-invert max-w-none"
+                      dangerouslySetInnerHTML={{ __html: detailProyek.detail }}
+                    />
                   </div>
                 ) : (
                   <p className="text-text-muted italic mb-6">Belum ada detail proyek.</p>
@@ -1746,7 +1826,7 @@ const AdminDashboard = () => {
             </div>
 
             {/* Content Body */}
-            <div className="flex-1 overflow-y-auto p-6">
+            <div className="flex-1 overflow-y-auto hide-scrollbar p-6">
               <form id="heroForm" onSubmit={handleHeroSubmit} className="flex flex-col md:flex-row gap-6">
                 {/* Left Column: Image Upload */}
                 <div className="w-full md:w-1/2 lg:w-5/12">
@@ -1923,7 +2003,7 @@ const AdminDashboard = () => {
             </div>
 
             {/* Content Body */}
-            <div className="flex-1 overflow-y-auto p-6">
+            <div className="flex-1 overflow-y-auto hide-scrollbar p-6">
               <form id="videoForm" onSubmit={handleVideoSubmit} className="flex flex-col md:flex-row gap-6">
                 {/* Left Column: Video Upload */}
                 <div className="w-full md:w-1/2 lg:w-5/12">
