@@ -610,11 +610,10 @@ const AdminDashboard = () => {
       {message.text && (
         <div className="container-custom mt-4">
           <div
-            className={`p-4 rounded-xl text-sm font-medium ${
-              message.type === 'error'
+            className={`p-4 rounded-xl text-sm font-medium ${message.type === 'error'
                 ? 'bg-red-500/10 border border-red-500/30 text-red-400'
                 : 'bg-green-500/10 border border-green-500/30 text-green-400'
-            }`}
+              }`}
           >
             {message.text}
           </div>
@@ -755,11 +754,10 @@ const AdminDashboard = () => {
               {videoList.map((item) => (
                 <div
                   key={item.id}
-                  className={`bg-dark-50/80 rounded-none md:rounded-2xl border-b md:border overflow-hidden group transition-all duration-300 ${
-                    item.is_active
+                  className={`bg-dark-50/80 rounded-none md:rounded-2xl border-b md:border overflow-hidden group transition-all duration-300 ${item.is_active
                       ? 'border-primary/50 md:border-primary/50'
                       : 'border-dark-200/50 hover:border-primary/30'
-                  }`}
+                    }`}
                 >
                   <div className="relative h-52 sm:h-48 bg-dark-200/30">
                     {item.video ? (
@@ -953,11 +951,10 @@ const AdminDashboard = () => {
                   <button
                     key={page}
                     onClick={() => goToPage(page)}
-                    className={`w-10 h-10 rounded-lg text-sm font-semibold transition-all ${
-                      currentPage === page
+                    className={`w-10 h-10 rounded-lg text-sm font-semibold transition-all ${currentPage === page
                         ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/25'
                         : 'border border-dark-200/50 text-text-body hover:text-primary hover:border-primary/50'
-                    }`}
+                      }`}
                   >
                     {page}
                   </button>
@@ -1112,11 +1109,10 @@ const AdminDashboard = () => {
                     <button
                       key={page}
                       onClick={() => goToProyekPage(page)}
-                      className={`w-10 h-10 rounded-lg text-sm font-semibold transition-all ${
-                        proyekCurrentPage === page
+                      className={`w-10 h-10 rounded-lg text-sm font-semibold transition-all ${proyekCurrentPage === page
                           ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/25'
                           : 'border border-dark-200/50 text-text-body hover:text-primary hover:border-primary/50'
-                      }`}
+                        }`}
                     >
                       {page}
                     </button>
@@ -1147,8 +1143,8 @@ const AdminDashboard = () => {
 
       {/* Create/Edit Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-sm">
-          <div className="bg-dark-50 rounded-2xl border border-dark-200/50 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-md">
+          <div className="bg-dark-50 rounded-2xl border border-dark-200/50 w-[80vw] h-[80vh] max-w-none overflow-y-auto">
             <div className="flex items-center justify-between p-6 border-b border-dark-200/50">
               <h3 className="text-lg font-bold text-text-heading">
                 {editingItem ? 'Edit Kegiatan' : 'Tambah Kegiatan Baru'}
@@ -1296,7 +1292,7 @@ const AdminDashboard = () => {
 
       {/* Delete Confirmation Modal */}
       {deleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-md">
           <div className="bg-dark-50 rounded-2xl border border-dark-200/50 p-6 w-full max-w-sm">
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-14 h-14 bg-red-500/10 rounded-2xl mb-4">
@@ -1328,11 +1324,11 @@ const AdminDashboard = () => {
       {/* Detail View Modal */}
       {detailItem && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/85 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/85 backdrop-blur-md"
           onClick={() => setDetailItem(null)}
         >
           <div
-            className="relative bg-dark-50 rounded-2xl border border-dark-200/50 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl"
+            className="relative bg-dark-50 rounded-2xl border border-dark-200/50 w-[80vw] h-[80vh] max-w-none overflow-y-auto shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close */}
@@ -1420,8 +1416,8 @@ const AdminDashboard = () => {
 
       {/* Proyek Create/Edit Modal */}
       {showProyekModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-sm">
-          <div className="bg-dark-50 rounded-2xl border border-dark-200/50 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-md">
+          <div className="bg-dark-50 rounded-2xl border border-dark-200/50 w-[80vw] h-[80vh] max-w-none overflow-y-auto">
             <div className="flex items-center justify-between p-6 border-b border-dark-200/50">
               <h3 className="text-lg font-bold text-text-heading">
                 {editingProyek ? 'Edit Proyek' : 'Tambah Proyek Baru'}
@@ -1581,11 +1577,11 @@ const AdminDashboard = () => {
       {/* Proyek Detail Modal */}
       {detailProyek && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/85 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/85 backdrop-blur-md"
           onClick={() => setDetailProyek(null)}
         >
           <div
-            className="relative bg-dark-50 rounded-2xl border border-dark-200/50 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl"
+            className="relative bg-dark-50 rounded-2xl border border-dark-200/50 w-[80vw] h-[80vh] max-w-none overflow-y-auto shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -1671,7 +1667,7 @@ const AdminDashboard = () => {
 
       {/* Proyek Delete Confirmation Modal */}
       {deleteProyekConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-md">
           <div className="bg-dark-50 rounded-2xl border border-dark-200/50 p-6 w-full max-w-sm">
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-14 h-14 bg-red-500/10 rounded-2xl mb-4">
@@ -1704,8 +1700,8 @@ const AdminDashboard = () => {
 
       {/* Hero Create/Edit Modal */}
       {showHeroModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-sm">
-          <div className="bg-dark-50 rounded-2xl border border-dark-200/50 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-md">
+          <div className="bg-dark-50 rounded-2xl border border-dark-200/50 w-[80vw] h-[80vh] max-w-none overflow-y-auto">
             <div className="flex items-center justify-between p-6 border-b border-dark-200/50">
               <h3 className="text-lg font-bold text-text-heading">
                 {editingHero ? 'Edit Hero Image' : 'Tambah Hero Image'}
@@ -1836,7 +1832,7 @@ const AdminDashboard = () => {
 
       {/* Hero Delete Confirmation Modal */}
       {deleteHeroConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-md">
           <div className="bg-dark-50 rounded-2xl border border-dark-200/50 p-6 w-full max-w-sm">
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-14 h-14 bg-red-500/10 rounded-2xl mb-4">
@@ -1869,8 +1865,8 @@ const AdminDashboard = () => {
 
       {/* Video Create/Edit Modal */}
       {showVideoModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-sm">
-          <div className="bg-dark-50 rounded-2xl border border-dark-200/50 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-md">
+          <div className="bg-dark-50 rounded-2xl border border-dark-200/50 w-[80vw] h-[80vh] max-w-none overflow-y-auto">
             <div className="flex items-center justify-between p-6 border-b border-dark-200/50">
               <h3 className="text-lg font-bold text-text-heading">
                 {editingVideo ? 'Edit Video' : 'Tambah Video Baru'}
@@ -1986,7 +1982,7 @@ const AdminDashboard = () => {
 
       {/* Video Delete Confirmation Modal */}
       {deleteVideoConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/80 backdrop-blur-md">
           <div className="bg-dark-50 rounded-2xl border border-dark-200/50 p-6 w-full max-w-sm">
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-14 h-14 bg-red-500/10 rounded-2xl mb-4">

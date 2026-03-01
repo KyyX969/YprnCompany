@@ -44,3 +44,9 @@ folder database
 
 # github prompt ignore
 .github/
+
+# Dependencies
+node_modules/
+
+# backend
+backend/node_modules
